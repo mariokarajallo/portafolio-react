@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BsTwitter, BsInstagram } from "react-icons/bs";
 import { FaLinkedinIn, FaGithub } from "react-icons/fa";
+import emailjs from "@emailjs/browser";
 
 import { images } from "../../constants";
 import { AppWrap, MotionWrap } from "../../wrapper";
@@ -33,13 +34,37 @@ const Footer = () => {
       message: message,
     };
 
-    client
-      .create(contact)
+    // Configurar EmailJS con todos los parámetros que espera tu plantilla
+    const emailjsParams = {
+      from_name: username,
+      from_email: email,
+      message: message,
+      email: email, // Agregar este parámetro que espera tu plantilla
+    };
+
+    // Enviar a Sanity y EmailJS en paralelo
+    Promise.all([
+      // Guardar en Sanity
+      client.create(contact),
+      // Enviar email con EmailJS
+      emailjs.send(
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+        emailjsParams,
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
+      ),
+    ])
       .then(() => {
         setLoading(false);
         setIsFormSubmitted(true);
+        console.log(
+          "✅ Mensaje guardado en Sanity y email enviado exitosamente"
+        );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        console.error("❌ Error al enviar mensaje:", err);
+      });
   };
 
   return (
@@ -52,12 +77,15 @@ const Footer = () => {
             mario@karajallo.com
           </a>
         </div>
-        <div className="app__footer-card">
+        <a
+          href="https://wa.me/595985743672?text=Hi%20Mario!%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect."
+          className="app__footer-card"
+          target="_blank"
+          rel="noreferrer"
+        >
           <img src={images.mobile} alt="phone" />
-          <a href="tel:+595985743672" className="p-text">
-            +595 985 743672
-          </a>
-        </div>
+          <span className="p-text">+595 985 743672</span>
+        </a>
       </div>
 
       {!isFormSubmitted ? (
