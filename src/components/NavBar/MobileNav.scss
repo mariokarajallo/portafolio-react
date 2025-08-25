@@ -1,0 +1,285 @@
+/* ===== NAV MOBILE - MISMO ESTILO QUE LOS CARDS ===== */
+
+/* Botón hamburguesa */
+.mobile-nav-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-normal);
+
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent-color);
+  }
+
+  .hamburger-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--text-primary);
+    transition: transform var(--transition-normal);
+  }
+
+  &:hover .hamburger-icon {
+    transform: scale(1.1);
+  }
+
+  @media screen and (min-width: 900px) {
+    display: none;
+  }
+}
+
+/* Overlay de fondo */
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9998; /* Mantener por debajo del navbar */
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Menú móvil principal */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 320px;
+  height: 100vh;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  border-left: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+  z-index: 9999; /* Mantener por debajo del navbar */
+  box-shadow: var(--shadow-lg);
+}
+
+/* Header del menú */
+.mobile-menu-header {
+  padding: 2rem 1.5rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  border-radius: var(--radius-xl) 0 0 0;
+}
+
+.mobile-menu-title {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.close-button {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--shadow-sm);
+
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent-color);
+  }
+
+  .close-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--text-primary);
+  }
+}
+
+/* Contenido del menú */
+.mobile-menu-content {
+  padding: 2rem 1.5rem;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+/* Lista de navegación */
+.mobile-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobile-nav-item {
+  position: relative;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-normal);
+  overflow: hidden;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--shadow-sm);
+
+  /* Efecto hover principal (igual que los cards) */
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent-color);
+
+    .mobile-nav-link {
+      color: var(--text-primary);
+    }
+
+    /* Efecto de brillo */
+    &::before {
+      left: 100%;
+    }
+
+    /* Efecto de borde brillante */
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  /* Efecto de brillo deslizante (igual que los cards) */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left var(--transition-slow);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Borde brillante (igual que los cards) */
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--radius-lg);
+    padding: 2px;
+    background: var(--gradient-primary);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    pointer-events: none;
+  }
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 1rem 1.25rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+  transition: color var(--transition-normal);
+
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Scrollbar personalizado */
+.mobile-menu-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.mobile-menu-content::-webkit-scrollbar-track {
+  background: var(--glass-bg);
+  border-radius: var(--radius-sm);
+}
+
+.mobile-menu-content::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: var(--radius-sm);
+}
+
+.mobile-menu-content::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color);
+}
+
+/* Responsive */
+@media screen and (max-width: 480px) {
+  .mobile-menu {
+    max-width: 100%;
+  }
+
+  .mobile-menu-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .mobile-nav-link {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Estados activos */
+.mobile-nav-item.active {
+  background: var(--glass-bg);
+  border-color: var(--accent-color);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+
+  .mobile-nav-link {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  &::after {
+    opacity: 1;
+  }
+}

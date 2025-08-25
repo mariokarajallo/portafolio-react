@@ -22,7 +22,7 @@ import about04 from "../assets/about04.png";
 
 import profile2 from "../assets/profile2.png";
 import circle from "../assets/circle.svg";
-import logo2 from "../assets/logo2.png";
+import logo2 from "../assets/logo2.svg";
 
 export default {
   email,

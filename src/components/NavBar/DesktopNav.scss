@@ -1,0 +1,81 @@
+.app__navbar-links {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  gap: 2rem;
+
+  li {
+    margin: 0 1rem;
+    cursor: pointer;
+    flex-direction: column;
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+
+    /* Efecto hover con glassmorphism */
+    &:hover {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-backdrop);
+      -webkit-backdrop-filter: var(--glass-backdrop);
+      border: 1px solid var(--glass-border);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    div {
+      width: 5px;
+      height: 5px;
+      background: transparent;
+      border-radius: 50%;
+      margin-bottom: 5px;
+      transition: all var(--transition-normal);
+    }
+
+    a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      flex-direction: column;
+      text-transform: uppercase;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      transition: all var(--transition-normal);
+      position: relative;
+
+      /* Efecto de subrayado animado */
+      &::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background: var(--gradient-primary);
+        transition: width var(--transition-normal);
+        border-radius: var(--radius-sm);
+      }
+
+      &:hover {
+        color: var(--text-primary);
+
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+
+    &:hover {
+      div {
+        background: var(--gradient-primary);
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
+}

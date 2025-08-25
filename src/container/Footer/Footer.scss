@@ -1,164 +1,333 @@
 .app__footer {
-    flex: 1;
-    width: 100%;
-    flex-direction: column;
+  flex: 1;
+  width: 100%;
+  flex-direction: column;
+  padding: 2rem 0;
+  
+  .head-text {
+    text-align: center;
+    margin-bottom: 4rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    
+    span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    @media screen and (max-width: 768px) {
+      margin-bottom: 3rem;
+    }
+  }
 }
 
 .app__footer-cards {
-    width: 60%;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+
+  .app__footer-card {
+    min-width: 300px;
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
-    flex-wrap: wrap;
-    margin: 4em 2rem 2rem;
+    padding: 1.5rem 2rem;
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    
+    /* Glassmorphism moderno como el header */
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-lg);
+    
+    /* Efecto hover principal */
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+      border-color: var(--accent-color);
+      
+      img {
+        transform: scale(1.1);
+        filter: brightness(1.1) contrast(1.1);
+      }
+      
+      p, a, span {
+        color: var(--text-primary);
+      }
+      
+      /* Efecto de brillo */
+      &::before {
+        left: 100%;
+      }
+      
+      /* Efecto de borde brillante */
+      &::after {
+        opacity: 1;
+      }
+    }
+    
+    /* Efecto de brillo deslizante */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left var(--transition-slow);
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    /* Borde brillante */
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: var(--radius-xl);
+      padding: 2px;
+      background: var(--gradient-primary);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+      pointer-events: none;
+    }
 
-    .app__footer-card {
-        min-width: 290px;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
+    img {
+      width: 45px;
+      height: 45px;
+      margin: 0 1rem 0 0;
+      transition: all var(--transition-normal);
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+      position: relative;
+      z-index: 2;
+    }
 
-        margin: 1rem 0;
-        padding: 1rem;
-        border-radius: 10px;
-        cursor: pointer;
-        background-color: #fef4f5;
-
-        transition: all0.3s ease-in-out;
-
-        img {
-            width: 40px;
-            height: 40px;
-            margin: 0 0.7rem;
-        }
-
-        p {
-            font-weight: 500;
-        }
-
-        a {
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        &:hover {
-            box-shadow: 0 0 25px #fef4f5;
-        }
-
-        @media screen and (max-width: 450px) {
-            width: 100%;
-        }
+    p, a, span {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-normal);
+      position: relative;
+      z-index: 2;
+      letter-spacing: 0.02em;
+      
+      @media screen and (min-width: 2000px) {
+        font-size: 1.25rem;
+      }
+      
+      @media screen and (max-width: 768px) {
+        font-size: 0.9rem;
+      }
     }
 
     @media screen and (max-width: 768px) {
-        width: 100%;
+      min-width: 280px;
+      padding: 1.25rem 1.5rem;
     }
-}
+    
+    @media screen and (max-width: 450px) {
+      width: 100%;
+      min-width: auto;
+      padding: 1rem 1.25rem;
+    }
+  }
 
-.app__footer-cards .app__footer-card:last-child {
-    background-color: #fef4f5;
-}
-
-.app__footer-cards .app__footer-card:last-child {
-    box-shadow: 0 0 25px #fef4f5;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0 1rem;
+  }
 }
 
 .app__footer-form {
-    width: 60%;
-    flex-direction: column;
-    margin: 1rem 2rem;
+  width: 60%;
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  flex-direction: column;
+  gap: 1.5rem;
 
-    div {
-        width: 100%;
-        margin: 0.75rem 0;
-        border-radius: 10px;
-        cursor: pointer;
-        background-color: var(--primary-color);
+  div {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-normal);
+    
+    /* Glassmorphism para inputs */
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-md);
 
-        transition: all 0.3s ease-in-out;
-
-        input,
-        textarea {
-            width: 100%;
-            padding: 0.95rem;
-            border: none;
-            border-radius: 7px;
-            background-color: var(--white-color);
-
-            font-family: var(--font-base);
-            color: var(--secondary-color);
-            outline: none;
-        }
-
-        textarea {
-            height: 170px;
-        }
-
-        &:hover {
-            box-shadow: 0 0 25px var(--primary-color);
-        }
+    input,
+    textarea {
+      width: 100%;
+      padding: 1.25rem;
+      border: none;
+      border-radius: var(--radius-lg);
+      background: transparent;
+      font-family: var(--font-base);
+      color: var(--text-primary);
+      outline: none;
+      font-size: 1rem;
+      transition: all var(--transition-normal);
+      
+      &::placeholder {
+        color: var(--text-muted);
+        opacity: 0.7;
+      }
+      
+      &:focus {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+      }
     }
 
-    button {
-        padding: 1rem 2rem;
-        border-radius: 10px;
-        border: none;
-        background-color: var(--secondary-color);
-
-        font-weight: 500;
-        color: var(--white-color);
-        outline: none;
-        margin: 2rem 0 0 0;
-        font-family: var(--font-base);
-
-        transition: cubic-bezier(0.55, 0.085, 0.68, 0.53);
-        cursor: pointer;
-
-        &:hover {
-            background-color: #2430af;
-        }
+    textarea {
+      height: 170px;
+      resize: vertical;
+      min-height: 120px;
     }
 
-    @media screen and (max-width: 768px) {
-        width: 100%;
-        margin: 1rem 0;
+    &:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(255, 255, 255, 0.3);
     }
+  }
+
+  button {
+    padding: 1.25rem 2.5rem;
+    border-radius: var(--radius-lg);
+    border: none;
+    background: var(--gradient-primary);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+    outline: none;
+    margin: 1rem 0 0 0;
+    font-family: var(--font-base);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    
+    /* Efecto hover */
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      
+      &::before {
+        left: 100%;
+      }
+    }
+    
+    /* Efecto de brillo */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left var(--transition-normal);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0 1rem;
+  }
 }
 
 .app__social-footer {
-    display: none;
-    @media screen and (max-width: 980px) {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        margin: 1rem;
-        // justify-content: flex-end;
+  display: none;
+  
+  @media screen and (max-width: 980px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+    gap: 1rem;
+    padding: 1rem;
 
-        padding: 1rem;
+    div {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-backdrop);
+      -webkit-backdrop-filter: var(--glass-backdrop);
+      border: 1px solid var(--glass-border);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all var(--transition-normal);
+      box-shadow: var(--shadow-md);
+      
+      &:hover {
+        background: var(--gradient-primary);
+        border-color: var(--accent-color);
+        transform: translateY(-3px) scale(1.1);
+        box-shadow: var(--shadow-lg);
+      }
 
-        div {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--white-color);
-            margin: 0.25rem 0.5rem;
-            border: 1px solid var(--lightGray-color);
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            transition: all 0.3s ease-in-out;
-
-            svg {
-                display: flex;
-                align-items: center;
-                width: 15px;
-                height: 15px;
-                color: var(--gray-color);
-            }
-        }
+      svg {
+        width: 20px;
+        height: 20px;
+        color: var(--text-secondary);
+        transition: color var(--transition-normal);
+      }
+      
+      &:hover svg {
+        color: var(--text-primary);
+      }
     }
+  }
+}
+
+/* Animación de entrada para las cards */
+.app__footer-card {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30px);
+  
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
