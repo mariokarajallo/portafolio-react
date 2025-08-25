@@ -71,6 +71,8 @@
   padding: 6rem 2rem 0;
   position: relative;
   z-index: 2;
+  // Añadir control de overflow para evitar scroll horizontal
+  // overflow-x: hidden;
 
   @media screen and (min-width: 2000px) {
     padding-top: 8rem;
@@ -84,6 +86,11 @@
 
   @media screen and (max-width: 450px) {
     padding: 6rem 1rem 2rem;
+  }
+
+  // Añadir breakpoint específico para móviles pequeños
+  @media screen and (max-width: 375px) {
+    padding: 4rem 0.5rem 1rem;
   }
 }
 
@@ -99,6 +106,14 @@
   @media screen and (max-width: 1200px) {
     width: 100%;
     margin-right: 0rem;
+  }
+
+  // Añadir control específico para móviles
+  @media screen and (max-width: 768px) {
+    flex: 1;
+    align-items: center;
+    text-align: center;
+    margin-top: 3rem;
   }
 }
 
@@ -154,6 +169,18 @@
     &:hover::before {
       left: 100%;
     }
+
+    // Añadir media queries para móviles
+    @media screen and (max-width: 768px) {
+      padding: 1rem 1.5rem;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    @media screen and (max-width: 450px) {
+      padding: 0.8rem 1rem;
+      width: 95%;
+    }
   }
 
   .badge-cmp {
@@ -180,6 +207,15 @@
       @media screen and (min-width: 2000px) {
         font-size: 5rem;
       }
+
+      // Añadir tamaños responsivos para móviles
+      @media screen and (max-width: 768px) {
+        font-size: 2rem;
+      }
+
+      @media screen and (max-width: 450px) {
+        font-size: 1.8rem;
+      }
     }
 
     h1 {
@@ -194,12 +230,30 @@
       @media screen and (min-width: 2000px) {
         font-size: 5rem;
       }
+
+      // Añadir tamaños responsivos para móviles
+      @media screen and (max-width: 768px) {
+        font-size: 2.5rem;
+      }
+
+      @media screen and (max-width: 450px) {
+        font-size: 2rem;
+      }
     }
 
     p {
       color: var(--text-secondary);
       font-size: 1.1rem;
       margin: 0;
+
+      // Añadir tamaños responsivos para móviles
+      @media screen and (max-width: 768px) {
+        font-size: 1rem;
+      }
+
+      @media screen and (max-width: 450px) {
+        font-size: 0.9rem;
+      }
     }
   }
 
@@ -220,12 +274,35 @@
       &:hover {
         color: var(--text-primary);
       }
+
+      // Añadir alineación centrada para móviles
+      @media screen and (max-width: 768px) {
+        text-align: center;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+      }
+
+      @media screen and (max-width: 450px) {
+        font-size: 0.8rem;
+        letter-spacing: 0.3px;
+      }
+    }
+
+    // Ajustar margen para móviles
+    @media screen and (max-width: 768px) {
+      margin-top: 2rem;
     }
   }
 
   @media screen and (max-width: 1200px) {
     justify-content: flex-start;
     align-items: flex-start;
+  }
+
+  // Centrar contenido en móviles
+  @media screen and (max-width: 768px) {
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -320,6 +397,56 @@
       margin: 0;
     }
   }
+
+  // Añadir media queries específicas para móviles
+  @media screen and (max-width: 768px) {
+    gap: 1.5rem;
+
+    div {
+      width: 80px;
+      height: 80px;
+    }
+
+    div:nth-child(1) {
+      width: 80px;
+      height: 80px;
+    }
+
+    div:nth-child(2) {
+      width: 100px;
+      height: 100px;
+      margin: 0;
+    }
+
+    div:nth-child(3) {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    gap: 1rem;
+
+    div {
+      width: 60px;
+      height: 60px;
+    }
+
+    div:nth-child(1) {
+      width: 60px;
+      height: 60px;
+    }
+
+    div:nth-child(2) {
+      width: 80px;
+      height: 80px;
+    }
+
+    div:nth-child(3) {
+      width: 50px;
+      height: 50px;
+    }
+  }
 }
 
 .app__header-img {
@@ -367,5 +494,24 @@
 
   @media screen and (max-width: 1200px) {
     margin: 2rem 0;
+  }
+
+  // Añadir control específico para móviles
+  @media screen and (max-width: 768px) {
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+
+    img {
+      max-width: 300px;
+      width: 80%;
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    img {
+      max-width: 250px;
+      width: 90%;
+    }
   }
 }

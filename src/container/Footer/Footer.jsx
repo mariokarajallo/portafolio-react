@@ -129,9 +129,13 @@ const Footer = () => {
           <h3 className="head-text">Thank you for getting in touch</h3>
         </div>
       )}
-      <div className="app__social-footer" target="_blank" rel="noreferrer">
+      <div className="app__social-footer">
         <div>
-          <a href="https://github.com/mariokarajallo">
+          <a
+            href="https://github.com/mariokarajallo"
+            target="_blank"
+            rel="noreferrer"
+          >
             <FaGithub />
           </a>
         </div>

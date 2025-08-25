@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { images } from "../../constants";
 import DesktopNav from "./DesktopNav";
-import MobileNav from "./MobileNav";
+// import MobilNavSecondary from "./MobilNavSecondary";
+import MobilNav from "./MobileNav";
 import "./NavBar.scss";
 
 const NavBar = () => {
@@ -12,7 +13,7 @@ const NavBar = () => {
 
   return (
     <nav className="app__navbar">
-      {/* Logo compartido */}
+      {/* Logo compartido - solo visible en desktop */}
       <div className="app__navbar-logo">
         <img src={images.logo2} alt="logo" className="logo-svg" />
       </div>
@@ -21,7 +22,7 @@ const NavBar = () => {
       <DesktopNav navItems={navItems} />
 
       {/* Navegación móvil */}
-      <MobileNav navItems={navItems} toggle={toggle} setToggle={setToggle} />
+      <MobilNav navItems={navItems} toggle={toggle} setToggle={setToggle} />
     </nav>
   );
 };
