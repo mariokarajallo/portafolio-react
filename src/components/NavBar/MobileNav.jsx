@@ -62,7 +62,7 @@ const MobileNav = ({ navItems, toggle, setToggle }) => {
                 <ul className="mobile-nav-list">
                   {navItems.map((item, index) => (
                     <motion.li
-                      key={`mobile-link-${item}`}
+                      key={`mobile-link-${item.id}`}
                       className="mobile-nav-item"
                       initial={{ opacity: 0, x: 50 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -73,11 +73,11 @@ const MobileNav = ({ navItems, toggle, setToggle }) => {
                       }}
                     >
                       <a
-                        href={`#${item}`}
+                        href={`#${item.id}`}
                         onClick={closeModal}
                         className="mobile-nav-link"
                       >
-                        {item}
+                        {item.displayName}
                       </a>
                     </motion.li>
                   ))}

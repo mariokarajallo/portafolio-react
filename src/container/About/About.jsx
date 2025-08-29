@@ -15,14 +15,35 @@ import { urlFor, client } from "../../client";
 
 const About = () => {
   const [abouts, setAbouts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const query = '*[_type == "abouts"]';
+    const query = '*[_type == "abouts" && isActive == true]';
 
-    client.fetch(query).then((data) => {
-      setAbouts(data);
-    });
+    client
+      .fetch(query)
+      .then((data) => {
+        setAbouts(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching abouts:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return (
+      <div className="app__about app__flex">
+        <p>Cargando...</p>
+      </div>
+    );
+  }
+
+  if (abouts.length === 0) {
+    return null; // No mostrar la sección si no hay datos activos
+  }
 
   return (
     <>

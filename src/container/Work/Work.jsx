@@ -11,14 +11,59 @@ const Work = () => {
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
   const [works, setWorks] = useState([]);
   const [filterWork, setFilterWork] = useState([]);
+  const [workCategories, setWorkCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const query = '*[_type=="works"]';
+    const fetchData = async () => {
+      try {
+        // Obtener trabajos con múltiples categorías incluidas
+        const worksQuery = `
+          *[_type == "works" && isActive == true] {
+            ...,
+            categories[]-> {
+              name,
+              order,
+              isDefault,
+              isActive
+            }
+          }
+        `;
+        const worksData = await client.fetch(worksQuery);
 
-    client.fetch(query).then((data) => {
-      setWorks(data);
-      setFilterWork(data);
-    });
+        // Obtener categorías de filtro (solo las activas)
+        const categoriesQuery =
+          '*[_type == "workCategories" && isActive == true] | order(order asc)';
+        const categoriesData = await client.fetch(categoriesQuery);
+
+        // Agregar la opción "All" al final si no existe una categoría default activa
+        const allCategory = categoriesData.find(
+          (cat) => cat.isDefault && cat.isActive
+        );
+        if (!allCategory) {
+          categoriesData.push({
+            name: "All",
+            isDefault: true,
+            order: categoriesData.length + 1,
+          });
+        }
+
+        // Ordenar categorías
+        const sortedCategories = categoriesData.sort(
+          (a, b) => a.order - b.order
+        );
+
+        setWorks(worksData);
+        setFilterWork(worksData);
+        setWorkCategories(sortedCategories);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleWorkFilter = (item) => {
@@ -31,10 +76,29 @@ const Work = () => {
       if (item === "All") {
         setFilterWork(works);
       } else {
-        setFilterWork(works.filter((work) => work.tags.includes(item)));
+        // Filtrar por categoría - ahora verifica si el trabajo tiene la categoría en su array
+        setFilterWork(
+          works.filter(
+            (work) =>
+              work.categories &&
+              work.categories.some((category) => category?.name === item)
+          )
+        );
       }
     }, 500);
   };
+
+  if (loading) {
+    return (
+      <div className="app__works app__flex">
+        <p>Cargando...</p>
+      </div>
+    );
+  }
+
+  if (works.length === 0) {
+    return null;
+  }
 
   return (
     <>
@@ -44,20 +108,19 @@ const Work = () => {
       </h2>
 
       <div className="app__work-filter">
-        {["Collaborations", "Web App", "Mobile App", "All"].map(
-          (item, index) => (
-            <div
-              key={index}
-              onClick={() => handleWorkFilter(item)}
-              className={`app__work-filter-item app__flex p-text ${
-                activeFilter === item ? "item-active" : ""
-              }`}
-            >
-              {item}
-            </div>
-          )
-        )}
+        {workCategories.map((category, index) => (
+          <div
+            key={index}
+            onClick={() => handleWorkFilter(category.name)}
+            className={`app__work-filter-item app__flex p-text ${
+              activeFilter === category.name ? "item-active" : ""
+            }`}
+          >
+            {category.name}
+          </div>
+        ))}
       </div>
+
       <motion.div
         animate={animateCard}
         transition={{ duration: 0.5, delayChildren: 0.5 }}
@@ -106,7 +169,31 @@ const Work = () => {
               <p className="p-text" style={{ marginTop: 10 }}>
                 {work.description}
               </p>
-              {/* link proyecto mobil */}
+
+              {/* Mostrar las categorías del trabajo */}
+              {work.categories && work.categories.length > 0 && (
+                <div
+                  className="app__work-categories app__flex"
+                  style={{ marginTop: 10 }}
+                >
+                  {work.categories.map((category, index) => (
+                    <span key={index} className="app__work-category-item">
+                      {category.name}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {/* Tags movidos después del título y descripción */}
+              <div className="app__work-tags app__flex">
+                {work.tags &&
+                  work.tags.map((tag, index) => (
+                    <span key={index} className="app__work-tag-item">
+                      {tag}
+                    </span>
+                  ))}
+              </div>
+
               <div className="app__link-mobil">
                 <div>
                   <a href={work.projectLink} target="_blank" rel="noreferrer">
@@ -122,16 +209,6 @@ const Work = () => {
                     </motion.div>
                   </a>
                 </div>
-              </div>
-              {/* link proyecto mobil */}
-
-              <div className="app__work-tags app__flex">
-                {work.tags &&
-                  work.tags.slice(0, 4).map((tag, index) => (
-                    <span key={index} className="app__work-tag-item">
-                      {tag}
-                    </span>
-                  ))}
               </div>
             </div>
           </div>

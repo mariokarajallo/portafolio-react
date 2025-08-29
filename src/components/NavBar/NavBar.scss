@@ -67,3 +67,29 @@
     }
   }
 }
+
+// Estilos para el estado de loading
+.app__navbar-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+
+  p {
+    color: var(--white-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.8;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
