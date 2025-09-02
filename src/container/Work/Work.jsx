@@ -21,6 +21,7 @@ const Work = () => {
         const worksQuery = `
           *[_type == "works" && isActive == true] {
             ...,
+            showInAll,
             categories[]-> {
               name,
               order,
@@ -54,7 +55,13 @@ const Work = () => {
         );
 
         setWorks(worksData);
-        setFilterWork(worksData);
+
+        // Aplicar filtro inicial - solo mostrar trabajos que aparecen en "All"
+        const initialFilteredWorks = worksData.filter(
+          (work) => work.showInAll === true
+        );
+        setFilterWork(initialFilteredWorks);
+
         setWorkCategories(sortedCategories);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -74,9 +81,10 @@ const Work = () => {
       setAnimateCard([{ y: 0, opacity: 1 }]);
 
       if (item === "All") {
-        setFilterWork(works);
+        // Solo mostrar trabajos que tengan showInAll = true
+        setFilterWork(works.filter((work) => work.showInAll === true));
       } else {
-        // Filtrar por categoría - ahora verifica si el trabajo tiene la categoría en su array
+        // Filtrar por categoría específica
         setFilterWork(
           works.filter(
             (work) =>

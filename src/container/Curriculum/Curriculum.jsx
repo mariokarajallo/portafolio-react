@@ -15,8 +15,11 @@ const Curriculum = () => {
         const query = `*[_type == "curriculum" && isActive == true][0]{
           title,
           description,
-          buttonText,
-          "pdfUrl": pdfFile.asset->url
+          buttonTexts,
+          "cvFiles": {
+            "english": cvFiles.english.asset->url,
+            "spanish": cvFiles.spanish.asset->url
+          }
         }`;
 
         const data = await client.fetch(query);
@@ -31,13 +34,13 @@ const Curriculum = () => {
     fetchCurriculumData();
   }, []);
 
-  const handleDownloadCV = () => {
-    if (curriculumData?.pdfUrl) {
-      // Opción 1: Descarga directa con fallback a nueva pestaña
+  const handleDownloadCV = (language) => {
+    const pdfUrl = curriculumData?.cvFiles?.[language];
+    if (pdfUrl) {
       const link = document.createElement("a");
-      link.href = curriculumData.pdfUrl;
-      link.download = "cv-mario-karajallo.pdf";
-      link.target = "_blank"; // Abre en nueva pestaña si la descarga no funciona
+      link.href = pdfUrl;
+      link.download = `cv-mario-karajallo-${language}.pdf`;
+      link.target = "_blank";
       link.rel = "noopener noreferrer";
       document.body.appendChild(link);
       link.click();
@@ -56,7 +59,7 @@ const Curriculum = () => {
   }
 
   if (!curriculumData) {
-    return null; // No mostrar nada si no hay datos
+    return null;
   }
 
   return (
@@ -68,26 +71,41 @@ const Curriculum = () => {
       >
         <h2 className="head-text">
           {curriculumData.title ||
-            "Would you like to learn more about my experience?"}
+            "¿Te gustaría conocer más sobre mi experiencia?"}
         </h2>
 
         <div className="app__curriculum-description">
           <p className="p-text">
             {curriculumData.description ||
-              "Download my complete resume to learn all the details about my professional experience, projects, and technical skills."}
+              "Descarga mi currículum completo para conocer todos los detalles sobre mi experiencia profesional, proyectos y habilidades técnicas."}
           </p>
         </div>
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleDownloadCV}
-          className="app__curriculum-button"
-          disabled={!curriculumData.pdfUrl}
-        >
-          <span></span>
-          <span>{curriculumData.buttonText || "Download Resume"}</span>
-        </motion.button>
+        <div className="app__curriculum-buttons">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => handleDownloadCV("english")}
+            className="app__curriculum-button app__curriculum-button--english"
+            disabled={!curriculumData?.cvFiles?.english}
+          >
+            <span>
+              {curriculumData?.buttonTexts?.english || "Download CV (EN)"}
+            </span>
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => handleDownloadCV("spanish")}
+            className="app__curriculum-button app__curriculum-button--spanish"
+            disabled={!curriculumData?.cvFiles?.spanish}
+          >
+            <span>
+              {curriculumData?.buttonTexts?.spanish || "Descargar CV (ES)"}
+            </span>
+          </motion.button>
+        </div>
       </motion.div>
     </div>
   );

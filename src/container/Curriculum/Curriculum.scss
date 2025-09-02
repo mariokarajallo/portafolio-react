@@ -18,6 +18,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     h2 {
       margin-bottom: 1.5rem;
       color: var(--white-color);
@@ -34,22 +35,35 @@
       }
     }
 
+    .app__curriculum-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1rem;
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+    }
+
     .app__curriculum-button {
       padding: 1.25rem 2.5rem;
       border-radius: var(--radius-lg);
       border: none;
-      background: var(--gradient-primary);
       font-weight: 600;
       font-size: 1rem;
       color: var(--text-primary);
       outline: none;
-      margin: 1rem 0 0 0;
       font-family: var(--font-base);
       cursor: pointer;
       transition: all var(--transition-normal);
       position: relative;
       overflow: hidden;
       box-shadow: var(--shadow-md);
+      min-width: 200px;
 
       /* Efecto hover */
       &:hover {
@@ -84,6 +98,27 @@
 
       span:first-child {
         font-size: 1.3rem;
+        margin-right: 0.5rem;
+      }
+
+      /* Estilos específicos para cada idioma */
+      &--english {
+        background: var(--gradient-primary);
+      }
+
+      &--spanish {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+
+        &:hover {
+          transform: none;
+          box-shadow: var(--shadow-md);
+        }
       }
     }
   }
@@ -99,9 +134,12 @@
         font-size: 1.8rem;
       }
 
-      .app__curriculum-button {
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
+      .app__curriculum-buttons {
+        .app__curriculum-button {
+          padding: 0.8rem 1.5rem;
+          font-size: 1rem;
+          min-width: 180px;
+        }
       }
     }
   }
